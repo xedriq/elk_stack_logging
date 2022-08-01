@@ -3,18 +3,13 @@ version: '3.7'
 services:
   elasticsearch:
     image: elasticsearch:7.17.5
-    # build:
-    #   context: elasticsearch/
-    #   args:
-    #     ELK_VERSION: $ELK_VERSION
-    # volumes:
+    volumes:
     #   - type: bind
     #     source: ./elasticsearch/config/elasticsearch.yml
     #     target: /usr/share/elasticsearch/config/elasticsearch.yml
     #     read_only: true
     #   - type: volume
-    #     source: elasticsearch
-    #     target: /usr/share/elasticsearch/data
+      - elasticsearch:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -29,10 +24,6 @@ services:
 
   logstash:
     image: logstash:7.17.5
-    # build:
-    #   context: logstash/
-    #   args:
-    #     ELK_VERSION: $ELK_VERSION
     volumes:
       # - type: bind
       #   source: ./logstash/logstash.yml
@@ -55,10 +46,6 @@ services:
 
   kibana:
     image: kibana:7.17.5
-    # build:
-    #   context: kibana/
-    #   args:
-    #     ELK_VERSION: $ELK_VERSION
     volumes:
       - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
     ports:
