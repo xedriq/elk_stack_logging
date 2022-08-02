@@ -3,15 +3,19 @@ filebeat.config:
     path: ${path.config}/modules.d/*.yml
     reload.enabled: false
 
-filebeat.autodiscover:
-  providers:
-    - type: docker
-      hints.enabled: true
+# filebeat.autodiscover:
+#   providers:
+#     - type: docker
+#       hints.enabled: true
 
-processors:
-- add_cloud_metadata: ~
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/*.log
+
+# processors:
+# - add_cloud_metadata: ~
 
 output.elasticsearch:
-  hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
-  username: '${ELASTICSEARCH_USERNAME:}'
-  password: '${ELASTICSEARCH_PASSWORD:}'
+  hosts: '${ELASTICSEARCH_HOSTS:192.168.1.10:9200}'
